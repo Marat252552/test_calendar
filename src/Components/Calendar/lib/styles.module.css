@@ -1,0 +1,8 @@
+.mainBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: solid 1px rgb(215, 215, 215);
+    background: rgb(241, 241, 241);
+    row-gap: 50px;
+}
