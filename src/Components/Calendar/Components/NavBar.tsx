@@ -1,38 +1,43 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { LeftOutlined, RightOutlined } from "@ant-design/icons"
+import moment from "moment"
+import {Button} from 'antd'
+import { days_T } from "../../../Shared/types"
 
 let NumbersStyle = { fontSize: '15px', fontWeight: '450', fontFamily: 'system-ui', display: 'flex', justifyContent: 'center' }
 let LettersStyle = { fontSize: '10px', fontWeight: '450', fontFamily: 'system-ui', display: 'flex', justifyContent: 'center' }
 
-const List = ({ array, elStyle }: { array: Array<number | string>, elStyle: any }) => {
-    return <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr' }}>
+// Листинг букв дней недели либо номеров дней недели
+const List = ({ array, elStyle }: { array: Array<{symbol: string | number, value: string}>, elStyle: any }) => {
+    return <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr' }}>
+        <div></div>
         {array.map(el => {
-            return <span style={elStyle}>{el}</span>
+            return <span key={el.value} style={elStyle}>{el.symbol}</span>
         })}
     </div>
 }
 
-const SliderTool = () => {
+const SliderTool = ({month, toNextWeek, toPrevWeek}: {month: string, toNextWeek: () => void, toPrevWeek: () => void}) => {
     return <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row' }}>
-        <LeftOutlined style={{fontSize: '10px'}}/>
+        <LeftOutlined onClick={toPrevWeek} style={{fontSize: '10px'}}/>
         <span style={NumbersStyle}>
-            Ноябрь 2023
+            {month}
         </span>
-        <RightOutlined style={{fontSize: '10px'}}/>
+        <RightOutlined onClick={toNextWeek} style={{fontSize: '10px'}}/>
     </div>
 }
 
-const NavBar = () => {
-    let days = [
-        'M', 'T', 'W', 'T', 'F', 'S', 'S'
-    ]
-    let [numberDays, setDays] = useState([19, 20, 21, 22, 23, 24, 25])
+moment.updateLocale('en', {week: {dow: 1}})
+
+
+const NavBar = ({weekDays, days, toNextWeek, toPrevWeek, month}: {weekDays: any, days: days_T, toNextWeek: any, toPrevWeek: any, month: any}) => {
+    
     return <div style={{display: 'grid', gap: '5px'}}>
             {/* Названия дней недели */}
-            <List elStyle={LettersStyle} array={days} />
+            <List elStyle={LettersStyle} array={weekDays} />
             {/* Номера дней в месяце */}
-            <List elStyle={NumbersStyle} array={numberDays} />
-            <SliderTool />
+            <List elStyle={NumbersStyle} array={days} />
+            <SliderTool month={month} toNextWeek={toNextWeek} toPrevWeek={toPrevWeek}/>
     </div>
 }
 
