@@ -1,18 +1,16 @@
-import { useState, useEffect } from "react"
 import { LeftOutlined, RightOutlined } from "@ant-design/icons"
 import moment from "moment"
-import {Button} from 'antd'
 import { days_T } from "../../../Shared/types"
 
 let NumbersStyle = { fontSize: '15px', fontWeight: '450', fontFamily: 'system-ui', display: 'flex', justifyContent: 'center' }
 let LettersStyle = { fontSize: '10px', fontWeight: '450', fontFamily: 'system-ui', display: 'flex', justifyContent: 'center' }
 
 // Листинг букв дней недели либо номеров дней недели
-const List = ({ array, elStyle }: { array: Array<{symbol: string | number, value: string}>, elStyle: any }) => {
+const List = ({ array, elStyle }: { array: Array<{symbol: string | number, value: string | moment.Moment}>, elStyle: any }) => {
     return <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr' }}>
         <div></div>
         {array.map(el => {
-            return <span key={el.value} style={elStyle}>{el.symbol}</span>
+            return <span key={el.value.toString()} style={elStyle}>{el.symbol}</span>
         })}
     </div>
 }

@@ -2,9 +2,9 @@ import moment from "moment"
 import { useState, useEffect } from "react"
 import Actions from "./Components/Actions"
 import NavBar from "./Components/NavBar"
-import TimeLine from "./Components/TimeLine/TimeLine"
+import TimeLine from "./Components/TimeLine"
 import styles from './lib/styles.module.css'
-import { days_T } from "../../Shared/types"
+import { days_T, event_T } from "../../Shared/types"
 
 
 let months = [
@@ -23,6 +23,22 @@ let months = [
 ]
 
 const Calendar = () => {
+    // Добавление и изменение событий
+    let [events, setEvents] = useState<Array<event_T>>([])
+    let addEvent = (event: event_T) => {
+        let newEvents = events.filter(el => {
+            return el.id !== event.id
+        })
+        newEvents.push(event)
+        setEvents(newEvents)
+    }
+    let deleteEvent = (id: string) => {
+        let newEvents = events.filter(el => {
+            return el.id !== id
+        })
+        setEvents(newEvents)
+    }
+
     let [weekOffset, setWeekOffset] = useState(0)
     let toNextWeek = () => {
         setWeekOffset(weekOffset + 1)
@@ -55,16 +71,13 @@ const Calendar = () => {
     }
     let getMonth = () => {
         let chosenMonth = months.find(el => {
-            console.log(day.month(), el.id)
             return el.id === day.month()
         })
-        console.log(chosenMonth)
         setMonth(chosenMonth?.value || 'Не вабрано')
     }
     useEffect(() => {
         getDays()
         getMonth()
-        console.log(days)
     }, [weekOffset, day])
     let weekDays = [
         {symbol: 'M', value: 'Monday'},
@@ -79,7 +92,7 @@ const Calendar = () => {
         <div className={styles.mainBox}>
             <NavBar weekDays={weekDays} days={days} month={month} toNextWeek={toNextWeek} toPrevWeek={toPrevWeek}/>
         </div>
-        <TimeLine days={days}/>
+        <TimeLine events={events} deleteEvent={deleteEvent} addEvent={addEvent} days={days}/>
         <Actions />
     </>
 }
