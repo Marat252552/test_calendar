@@ -7,8 +7,8 @@ const TimeColumn = () => {
     }
     return <div style={{ display: 'flex', flexDirection: 'column' }}>
         {times.map(el =>
-            <div style={{overflow: 'auto', border: 'solid 1px black', width: '100%',  height: '5vh'}}>
-                <div style={{ width: '100%', height: '100%' }}>{el}</div>
+            <div style={{overflow: 'auto', width: '100%',  height: '5vh'}}>
+                <div style={{ width: '100%', height: '100%', fontSize: '10px'}}>{el}</div>
             </div>
         )}
     </div>

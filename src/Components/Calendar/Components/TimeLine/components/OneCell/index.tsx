@@ -65,7 +65,9 @@ let OneCell = ({ day, addEvent, cellEvent, deleteEvent }: Props_T) => {
         <div onClick={showModal} className={styles.cell}>
             {/* Если у клетки есть какое то событие, то она залита */}
             {(value !== '') ?
-                <div style={{ background: 'red', width: '100%', height: '100%' }}></div>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
+                    <div style={{width: '90%', height: '90%', background: 'rgb(231, 231, 255)'}}></div>
+                </div>
                 :
                 <div></div>
             }
